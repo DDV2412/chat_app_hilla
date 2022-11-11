@@ -1,3 +1,7 @@
+# Chat Application
+
+![ERD](https://github.com/DDV2412/platinum_challenge/blob/master/uiDesign.png?raw=true)
+
 # Custom project from Hilla
 
 This project can be used as a starting point to create your own Hilla application with Spring Boot.
