@@ -2,12 +2,13 @@ import { RouterLocation } from '@vaadin/router';
 import { makeAutoObservable } from 'mobx';
 
 export class AppStore {
-  applicationName = 'Chat-App';
+  applicationName = 'Chat App';
 
-  // The location, relative to the base path, e.g. "hello" when viewing "/hello"
   location = '';
 
   currentViewTitle = '';
+
+  email: String = '';
 
   constructor() {
     makeAutoObservable(this);

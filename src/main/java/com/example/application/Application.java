@@ -15,7 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 @Theme(value = "chat-app")
-@PWA(name = "Chat-App", shortName = "Chat-App", offlineResources = {})
+@PWA(name = "Chat App", shortName = "Chat App", offlineResources = {})
 public class Application implements AppShellConfigurator {
 
     public static void main(String[] args) {
