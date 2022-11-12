@@ -1,6 +1,6 @@
 # Chat Application
 
-![ERD](https://github.com/DDV2412/platinum_challenge/blob/master/uiDesign.png?raw=true)
+![UI](https://github.com/DDV2412/chat_app_hilla/blob/master/uiDesign.png?raw=true)
 
 # Custom project from Hilla
 
