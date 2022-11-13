@@ -1,12 +1,11 @@
 import { View } from '../../../view';
-import { customElement, state } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 import { html } from 'lit';
+import '@vaadin/icon';
+import '@vaadin/icons';
 
 @customElement('email-view')
 export class EmailView extends View {
-  @state()
-  private darkMode: Boolean = false;
-
   protected render(): unknown {
     return html`<style>
         [part='verify'] {
@@ -62,11 +61,13 @@ export class EmailView extends View {
           cursor: pointer;
           padding: 0;
            cursor: pointer;
+           background-color: transparent
         }
 
 
       </style>
       <div part="verify">
+        
         <section part="verify-notice">
           <header>
             <img part="logo" src="/images/Logo.png" alt="UK-Project" />
@@ -89,14 +90,5 @@ export class EmailView extends View {
   connectedCallback(): void {
     super.connectedCallback();
     this.classList.add('min-h-screen', 'block');
-    this._updateDarkMode();
-  }
-
-  _updateDarkMode(): void {
-    if (this.darkMode) {
-      this.setAttribute('theme', 'dark');
-    } else {
-      this.setAttribute('theme', 'light');
-    }
   }
 }

@@ -11,3 +11,16 @@ body {
   font-size: 14px;
   overflow-x: hidden;
 }
+
+[part='darkButton'] {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+}
+[part='darkButton'] button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: var(--lumo-contrast-90pct);
+  cursor: pointer;
+}

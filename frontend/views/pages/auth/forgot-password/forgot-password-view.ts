@@ -1,13 +1,12 @@
 import { View } from '../../../view';
-import { customElement, state } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 import { html } from 'lit';
 import '@vaadin/email-field';
+import '@vaadin/icon';
+import '@vaadin/icons';
 
 @customElement('forgot-password-view')
 export class ForgotPasswordView extends View {
-  @state()
-  private darkMode: Boolean = false;
-
   protected render(): unknown {
     return html`<style>
         [part='forgot'] {
@@ -86,19 +85,5 @@ export class ForgotPasswordView extends View {
           </form>
         </section>
       </div>`;
-  }
-
-  connectedCallback(): void {
-    super.connectedCallback();
-    this.classList.add('min-h-screen', 'block');
-    this._updateDarkMode();
-  }
-
-  _updateDarkMode(): void {
-    if (this.darkMode) {
-      this.setAttribute('theme', 'dark');
-    } else {
-      this.setAttribute('theme', 'light');
-    }
   }
 }

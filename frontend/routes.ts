@@ -6,8 +6,18 @@ export type ViewRoute = Route & {
   children?: ViewRoute[];
 };
 
-export const views: ViewRoute[] = [];
-export const routes: ViewRoute[] = [
+export const views: ViewRoute[] = [
+  {
+    component: 'home-view',
+    title: 'Home',
+    path: '',
+    action: async () => {
+      await import('./views/pages/home/home-view');
+      return;
+    },
+  },
+];
+export const guest: ViewRoute[] = [
   {
     component: 'login-view',
     title: 'Login',
@@ -70,5 +80,25 @@ export const routes: ViewRoute[] = [
       await import('./views/pages/auth/reset-password/reset-password-view');
       return;
     },
+  },
+];
+export const routes: ViewRoute[] = [
+  {
+    component: 'main-layout',
+    path: '',
+    action: async () => {
+      await import('./views/layout/main-layout');
+      return;
+    },
+    children: [...views],
+  },
+  {
+    component: 'guest-layout',
+    path: '',
+    action: async () => {
+      await import('./views/layout/guest-layout');
+      return;
+    },
+    children: [...guest],
   },
 ];

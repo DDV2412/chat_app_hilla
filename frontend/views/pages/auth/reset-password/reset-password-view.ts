@@ -1,13 +1,12 @@
 import { View } from '../../../view';
-import { customElement, state } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 import { html } from 'lit';
 import '@vaadin/password-field';
+import '@vaadin/icon';
+import '@vaadin/icons';
 
 @customElement('reset-password-view')
 export class ResetPasswordView extends View {
-  @state()
-  private darkMode: Boolean = false;
-
   protected render(): unknown {
     return html`<style>
         [part='reset'] {
@@ -92,14 +91,5 @@ export class ResetPasswordView extends View {
   connectedCallback(): void {
     super.connectedCallback();
     this.classList.add('min-h-screen', 'block');
-    this._updateDarkMode();
-  }
-
-  _updateDarkMode(): void {
-    if (this.darkMode) {
-      this.setAttribute('theme', 'dark');
-    } else {
-      this.setAttribute('theme', 'light');
-    }
   }
 }
