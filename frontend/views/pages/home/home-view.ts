@@ -29,12 +29,15 @@ export class HomeView extends View {
           width: 50px;
           height: 50px;
           overflow: hidden;
-          background-color: rebeccapurple;
           border-radius: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
         [part='recipient'] figure img {
-          object-position: center;
           width: 100%;
+          height: auto;
+          object-fit: cover;
         }
         [part='sender'] {
           border-radius: 20px 20px 0px 0px;
@@ -123,7 +126,7 @@ export class HomeView extends View {
         <header part="recipient">
           <div part="cart">
             <figure>
-              <img src="" alt="Username" />
+              <img src="/images/Logo.png" alt="Username" />
             </figure>
             <div part="content">
               <h1>Username</h1>

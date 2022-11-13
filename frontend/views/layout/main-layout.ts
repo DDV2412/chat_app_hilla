@@ -35,12 +35,15 @@ export class MainLayout extends Layout {
           width: 50px;
           height: 50px;
           overflow: hidden;
-          background-color: rebeccapurple;
           border-radius: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
         [part='header'] figure img {
-          object-position: center;
           width: 100%;
+          height: auto;
+          object-fit: cover;
         }
         [part='search'] {
           width: 100%;
@@ -79,8 +82,16 @@ export class MainLayout extends Layout {
           width: 50px;
           height: 50px;
           overflow: hidden;
-          background-color: rebeccapurple;
           border-radius: 100%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        [part='user'] figure img {
+          width: 100%;
+          height: auto;
+          object-fit: cover;
         }
         [part='cart'] {
           display: flex;
@@ -123,7 +134,7 @@ export class MainLayout extends Layout {
         <aside part="sidebar">
           <header part="header">
             <figure>
-              <img src="" alt="Username" />
+              <img src="/images/Logo.png" alt="Username" />
             </figure>
             <div part="options">
               <button @click="${this._changeTheme}">
@@ -144,7 +155,7 @@ export class MainLayout extends Layout {
           <div part="user">
             <div part="cart">
               <figure>
-                <img src="" alt="Username" />
+                <img src="/images/Logo.png" alt="Username" />
               </figure>
               <div part="content">
                 <h1>Username</h1>
