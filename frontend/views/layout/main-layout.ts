@@ -20,6 +20,7 @@ export class MainLayout extends Layout {
           min-width: 386px;
           background-color: var(--lumo-contrast-5pct);
           border-radius: 0px 20px 20px 0px;
+          font-family: 'Montserrat', sans-serif;
         }
         [part='main'] {
           padding-left: 386px;

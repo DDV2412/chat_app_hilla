@@ -14,6 +14,7 @@ export class HomeView extends View {
           justify-content: space-between;
           min-height: 100vh;
           padding-left: 1rem;
+          font-family: 'Montserrat', sans-serif;
         }
         [part='recipient'] {
           border-radius: 0px 0px 20px 20px;
