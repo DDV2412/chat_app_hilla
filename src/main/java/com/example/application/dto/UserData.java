@@ -1,30 +1,45 @@
 package com.example.application.dto;
 
+import java.util.UUID;
+
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 public class UserData {
 
-    @NotBlank(message = "UserName must not be blank")
-    @Size(max = 50, message = "UserName must not exceed 50 characters")
+    private UUID id;
+
+    @NotEmpty(message = "Username cannot be an empty field")
+    @NotNull(message = "Username is a required field")
     private String userName;
 
-    @NotBlank(message = "FirstName must not be blank")
-    @Size(max = 50, message = "Firstname must not exceed 50 characters")
+    @NotEmpty(message = "Firstname cannot be an empty field")
+    @NotNull(message = "Firstname is a required field")
     private String firstName;
 
-    @NotBlank(message = "LastName must not be blank")
-    @Size(max = 50, message = "LastName must not exceed 50 characters")
+    @NotEmpty(message = "Lastname cannot be an empty field")
+    @NotNull(message = "Lastname is a required field")
     private String lastName;
 
-    @NotBlank(message = "Email must not be blank")
-    @Size(max = 50, message = "Email must not exceed 50 characters")
-    @Email(message = "Please insert valid email address")
+    @NotEmpty(message = "Email cannot be an empty field")
+    @NotNull(message = "Email is a required field")
+    @Email(message = "Please enter a valid e-mail address")
     private String email;
 
-    @NotBlank(message = "Password must not be blank")
+    @NotEmpty(message = "Password cannot be an empty field")
+    @NotNull(message = "Password is a required field")
+    @Pattern(regexp = "/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{10,24}$/")
     private String password;
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public String getUserName() {
         return userName;

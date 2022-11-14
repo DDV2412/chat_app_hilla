@@ -18,6 +18,7 @@ export class LoginView extends View {
           justify-content: center;
           align-items: center;
           padding: 1rem;
+          font-family: 'Montserrat', sans-serif;
         }
         [part='form-login'] {
           background-color: var(--lumo-contrast-5pct);
@@ -50,6 +51,7 @@ export class LoginView extends View {
         vaadin-text-field,
         vaadin-password-field {
           min-width: 100%;
+          font-family: 'Montserrat', sans-serif;
         }
 
         form a {

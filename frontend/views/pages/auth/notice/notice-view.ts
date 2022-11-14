@@ -16,6 +16,7 @@ export class NoticeView extends View {
           justify-content: center;
           align-items: center;
           padding: 1rem;
+           font-family: 'Montserrat', sans-serif;
         }
         [part='verify-notice'] {
           background-color: var(--lumo-contrast-5pct);

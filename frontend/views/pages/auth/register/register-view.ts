@@ -5,10 +5,16 @@ import '@vaadin/text-field';
 import '@vaadin/email-field';
 import '@vaadin/icon';
 import '@vaadin/icons';
+import { Binder, field } from '@hilla/form';
+import UserDataModel from 'Frontend/generated/com/example/application/dto/UserDataModel';
 
 @customElement('register-view')
 export class RegisterView extends View {
+  private binder = new Binder(this, UserDataModel);
+
   protected render(): unknown {
+    const { model } = this.binder;
+
     return html`<style>
         [part='register'] {
           width: 100%;
@@ -18,6 +24,7 @@ export class RegisterView extends View {
           justify-content: center;
           align-items: center;
           padding: 1rem;
+          font-family: 'Montserrat', sans-serif;
         }
         [part='form-register'] {
           background-color: var(--lumo-contrast-5pct);
@@ -50,6 +57,7 @@ export class RegisterView extends View {
         vaadin-text-field,
         vaadin-email-field {
           min-width: 100%;
+          font-family: 'Montserrat', sans-serif;
         }
 
         form a {
@@ -151,12 +159,14 @@ export class RegisterView extends View {
             <p>Create an account to UK Project to get all featrues</p>
           </header>
           <form part="form">
-            <vaadin-text-field label="Username" required> </vaadin-text-field>
+            <vaadin-text-field ${field(model.userName)} name="userName" label="Username" required> </vaadin-text-field>
             <div part="colspan">
-              <vaadin-text-field label="First name" required> </vaadin-text-field>
-              <vaadin-text-field label="Last name" required> </vaadin-text-field>
+              <vaadin-text-field ${field(model.firstName)} name="firstName" label="First name" required>
+              </vaadin-text-field>
+              <vaadin-text-field ${field(model.lastName)} name="lastName" label="Last name" required>
+              </vaadin-text-field>
             </div>
-            <vaadin-email-field label="Email address"></vaadin-email-field>
+            <vaadin-email-field ${field(model.email)} name="email" label="Email"></vaadin-email-field>
             <button part="submit">Register</button>
           </form>
           <p part="connect">Or connect using</p>

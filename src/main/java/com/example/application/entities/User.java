@@ -1,21 +1,84 @@
 package com.example.application.entities;
 
-public class User {
+import java.util.Collection;
+import java.util.Collections;
+import java.util.UUID;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+@Entity
+@Table(name = "users")
+public class User implements UserDetails {
+
+    @Id
+    private UUID id;
+
+    @Column(unique = true, length = 32)
     private String userName;
+
+    @Column(length = 48)
     private String firstName;
+
+    @Column(length = 48)
     private String lastName;
+
+    @Column(unique = true, length = 64)
     private String email;
+
     private String password;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(email);
+
+        return Collections.singleton(authority);
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 
     public User() {
     }
 
-    public User(String userName, String firstName, String lastName, String email, String password) {
+    public User(UUID id, String userName, String firstName, String lastName, String email, String password) {
+        this.id = id;
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getUserName() {
@@ -56,6 +119,11 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String getUsername() {
+        return userName;
     }
 
 }

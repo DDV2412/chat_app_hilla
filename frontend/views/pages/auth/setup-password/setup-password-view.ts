@@ -17,6 +17,7 @@ export class SetupPasswordView extends View {
           justify-content: center;
           align-items: center;
           padding: 1rem;
+          font-family: 'Montserrat', sans-serif;
         }
         [part='form-setup'] {
           background-color: var(--lumo-contrast-5pct);
@@ -48,6 +49,7 @@ export class SetupPasswordView extends View {
 
         vaadin-password-field {
           min-width: 100%;
+          font-family: 'Montserrat', sans-serif;
         }
 
         form button[part='submit'] {
