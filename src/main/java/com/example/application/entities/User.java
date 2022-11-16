@@ -6,6 +6,8 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -18,6 +20,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 public class User implements UserDetails {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(unique = true, length = 32)
@@ -33,6 +36,8 @@ public class User implements UserDetails {
     private String email;
 
     private String password;
+
+    private Boolean isEnabled = false;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -58,19 +63,21 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return this.isEnabled;
     }
 
     public User() {
     }
 
-    public User(UUID id, String userName, String firstName, String lastName, String email, String password) {
+    public User(UUID id, String userName, String firstName, String lastName, String email, String password,
+            Boolean isEnabled) {
         this.id = id;
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.isEnabled = isEnabled;
     }
 
     public UUID getId() {
@@ -121,9 +128,17 @@ public class User implements UserDetails {
         this.password = password;
     }
 
+    public Boolean getIsEnabled() {
+        return isEnabled;
+    }
+
+    public void setIsEnabled(Boolean isEnabled) {
+        this.isEnabled = isEnabled;
+    }
+
     @Override
     public String getUsername() {
-        return userName;
+        return this.userName;
     }
 
 }

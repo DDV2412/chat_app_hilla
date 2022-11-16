@@ -1,9 +1,20 @@
 import { Route } from '@vaadin/router';
+import { appStore } from './stores/app-store';
 
 export type ViewRoute = Route & {
   title?: string;
   icon?: string;
   children?: ViewRoute[];
+  requiresLogin?: boolean;
+};
+
+export const hasAccess = (route: Route) => {
+  const viewRoute = route as ViewRoute;
+  if (viewRoute.requiresLogin && !appStore.loggedIn) {
+    return false;
+  }
+
+  return true;
 };
 
 export const views: ViewRoute[] = [
@@ -86,6 +97,7 @@ export const routes: ViewRoute[] = [
   {
     component: 'main-layout',
     path: '',
+    requiresLogin: true,
     action: async () => {
       await import('./views/layout/main-layout');
       return;

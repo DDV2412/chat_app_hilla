@@ -1,11 +1,22 @@
 import { View } from '../../../view';
-import { customElement } from 'lit/decorators.js';
+import { customElement, state } from 'lit/decorators.js';
 import { html } from 'lit';
 import '@vaadin/icon';
 import '@vaadin/icons';
+import { Router } from '@vaadin/router';
+import { UserController } from 'Frontend/generated/endpoints';
 
 @customElement('notice-view')
 export class NoticeView extends View {
+  @state()
+  private user = {
+    userName: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+  };
+
   protected render(): unknown {
     return html`<style>
         [part='verify'] {
@@ -73,7 +84,7 @@ export class NoticeView extends View {
           <header>
             <img part="logo" src="/images/Logo.png" alt="UK-Project" />
             <h1>We've send you an email</h1>
-            <p>Please check your inbox at <strong>sample@mail.com</strong></p>
+            <p>Please check your inbox at <strong>${this.user.email}</strong></p>
           </header>
           <p>The email contains a link to verify your email address and active your UK Project account.</p>
 
@@ -81,7 +92,7 @@ export class NoticeView extends View {
             <strong>
               Didn't get the email?</strong>
               <br/>
-              <span><button>Resend verification email</button> (and remember to check your junk or spam folder, to)</span>
+              <span><button @click="${this.requestVerify}">Resend verification email</button> (and remember to check your junk or spam folder, to)</span>
             </p>
           </div>
         </section>
@@ -91,5 +102,35 @@ export class NoticeView extends View {
   connectedCallback(): void {
     super.connectedCallback();
     this.classList.add('min-h-screen', 'block');
+    this._update();
+  }
+
+  private _update() {
+    const userData = localStorage.getItem('user');
+
+    if (!userData) {
+      return Router.go('/login');
+    }
+    const jsonData = JSON.parse(userData);
+
+    this.user = {
+      firstName: jsonData.firstName,
+      lastName: jsonData.lastName,
+      userName: jsonData.userName,
+      email: jsonData.email,
+      password: '',
+    };
+
+    return this.user;
+  }
+
+  private async requestVerify(e: CustomEvent) {
+    e.preventDefault();
+
+    const result = await UserController.verify(this.user);
+
+    localStorage.setItem('user', JSON.stringify(result?.body.payload));
+
+    return Router.go('/verify-notice');
   }
 }

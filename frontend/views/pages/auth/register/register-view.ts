@@ -7,6 +7,8 @@ import '@vaadin/icon';
 import '@vaadin/icons';
 import { Binder, field } from '@hilla/form';
 import UserDataModel from 'Frontend/generated/com/example/application/dto/UserDataModel';
+import { UserController } from 'Frontend/generated/endpoints';
+import { Router } from '@vaadin/router';
 
 @customElement('register-view')
 export class RegisterView extends View {
@@ -158,7 +160,7 @@ export class RegisterView extends View {
             <h1>Let's Get Started!</h1>
             <p>Create an account to UK Project to get all featrues</p>
           </header>
-          <form part="form">
+          <form part="form" @submit="${this.requestVerify}">
             <vaadin-text-field ${field(model.userName)} name="userName" label="Username" required> </vaadin-text-field>
             <div part="colspan">
               <vaadin-text-field ${field(model.firstName)} name="firstName" label="First name" required>
@@ -189,5 +191,15 @@ export class RegisterView extends View {
   connectedCallback(): void {
     super.connectedCallback();
     this.classList.add('min-h-screen', 'block');
+  }
+
+  private async requestVerify(e: CustomEvent) {
+    e.preventDefault();
+
+    const result = await UserController.verify(this.binder.value);
+
+    localStorage.setItem('user', JSON.stringify(result?.body.payload));
+
+    return Router.go('/verify-notice');
   }
 }

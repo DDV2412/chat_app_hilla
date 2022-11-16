@@ -5,7 +5,8 @@ import java.util.UUID;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
+
+import com.example.application.utils.StrongPassword;
 
 public class UserData {
 
@@ -30,7 +31,7 @@ public class UserData {
 
     @NotEmpty(message = "Password cannot be an empty field")
     @NotNull(message = "Password is a required field")
-    @Pattern(regexp = "/^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{10,24}$/")
+    @StrongPassword
     private String password;
 
     public UUID getId() {

@@ -1,14 +1,32 @@
-import { View } from '../../../view';
-import { customElement } from 'lit/decorators.js';
-import { html } from 'lit';
-import '@vaadin/text-field';
-import '@vaadin/password-field';
+import { LoginResult } from '@hilla/frontend';
 import '@vaadin/icon';
 import '@vaadin/icons';
+import '@vaadin/password-field';
+import '@vaadin/text-field';
+import { html } from 'lit';
+import { customElement, state } from 'lit/decorators.js';
+import { login } from '../../../auth';
+import { View } from '../../../view';
+import { RouterLocation } from '@vaadin/router';
+import { Notification } from '@vaadin/notification';
+import { Binder, field } from '@hilla/form';
+import UserDataModel from 'Frontend/generated/com/example/application/dto/UserDataModel';
 
 @customElement('login-view')
 export class LoginView extends View {
+  @state()
+  private error = false;
+
+  private returnUrl?: string;
+
+  private onSuccess = (result: LoginResult) => {
+    window.location.href = result.redirectUrl || this.returnUrl || result.defaultUrl || '/';
+  };
+
+  private binder = new Binder(this, UserDataModel);
+
   protected render(): unknown {
+    const { model } = this.binder;
     return html`<style>
         [part='login'] {
           width: 100%;
@@ -20,6 +38,7 @@ export class LoginView extends View {
           padding: 1rem;
           font-family: 'Montserrat', sans-serif;
         }
+
         [part='form-login'] {
           background-color: var(--lumo-contrast-5pct);
           box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.25), -2px 2px 2px rgba(0, 0, 0, 0.25);
@@ -134,11 +153,11 @@ export class LoginView extends View {
             <h1>Welcome back!</h1>
             <p>Log in to your existant account of UK Project</p>
           </header>
-          <form part="form">
-            <vaadin-text-field label="Username" required> </vaadin-text-field>
-            <vaadin-password-field label="Password"></vaadin-password-field>
+          <form part="form" @submit="${this.login}">
+            <vaadin-text-field label="Username" ${field(model.userName)}> </vaadin-text-field>
+            <vaadin-password-field label="Password" ${field(model.password)}></vaadin-password-field>
             <a href="forgot-password">Forgot Password</a>
-            <button part="submit">Login</button>
+            <button part="submit" ?disabled="${this.binder.invalid || this.binder.submitting}">Login</button>
           </form>
           <p part="connect">Or connect using</p>
           <div part="icons-connection">
@@ -160,5 +179,30 @@ export class LoginView extends View {
   connectedCallback(): void {
     super.connectedCallback();
     this.classList.add('min-h-screen', 'block');
+  }
+
+  async login(e: CustomEvent): Promise<LoginResult> {
+    e.preventDefault();
+
+    let userName = this.binder.value.userName;
+    let password = this.binder.value.password;
+
+    this.error = false;
+    const result = await login(String(userName), String(password));
+    this.error = result.error;
+
+    if (!result.error) {
+      this.onSuccess(result);
+    } else {
+      Notification.show(String(result.errorMessage), {
+        position: 'top-end',
+      }).setAttribute('theme', 'error');
+    }
+
+    return result;
+  }
+
+  onAfterEnter(location: RouterLocation) {
+    this.returnUrl = location.redirectFrom;
   }
 }

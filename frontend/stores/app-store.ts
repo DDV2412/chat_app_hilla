@@ -1,4 +1,6 @@
 import { RouterLocation } from '@vaadin/router';
+import UserDataModel from 'Frontend/generated/com/example/application/dto/UserDataModel';
+import { UserController } from 'Frontend/generated/endpoints';
 import { makeAutoObservable } from 'mobx';
 
 export class AppStore {
@@ -8,7 +10,7 @@ export class AppStore {
 
   currentViewTitle = '';
 
-  email: String = '';
+  user: UserDataModel | undefined = undefined;
 
   constructor() {
     makeAutoObservable(this);
@@ -28,6 +30,18 @@ export class AppStore {
     } else {
       this.currentViewTitle = (location?.route as any)?.title || '';
     }
+  }
+
+  async fetchUserInfo() {
+    this.user = await UserController.getAuthenticationUser();
+  }
+
+  clearUserInfo() {
+    this.user = undefined;
+  }
+
+  get loggedIn() {
+    return !!this.user;
   }
 }
 
